@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block title %}Trang chủ - Ấp Bình Châu{% endblock %}
+{% block content %}
+<section class="hero py-5"><div class="container py-4">
+<div class="row align-items-center"><div class="col-lg-8">
+<div class="small text-uppercase fw-bold mb-2">Kênh kết nối người dân với Ban ấp</div>
+<h1 class="fw-bold display-5">CỔNG AN NINH, TRẬT TỰ<br>ẤP BÌNH CHÂU</h1>
+<p class="lead">Gửi phản ánh, đặt lịch làm việc và tra cứu tình trạng yêu cầu một cách thuận tiện trên điện thoại.</p>
+<div class="d-flex flex-wrap gap-2"><a class="btn btn-light btn-lg" href="/phan-anh">🚨 Gửi phản ánh</a><a class="btn btn-outline-light btn-lg" href="/dat-lich">📅 Đặt lịch</a></div>
+</div></div></div></section>
+<div class="container py-5">
+<div class="row g-4">
+<div class="col-md-4"><div class="card quick p-4 h-100"><div class="display-6">🚨</div><h3 class="mt-2">Phản ánh ANTT</h3><p>Phản ánh các vấn đề an ninh, trật tự, giao thông, tiếng ồn và các vụ việc cần Ban ấp tiếp nhận.</p><a class="btn btn-main mt-auto" href="/phan-anh">Gửi phản ánh</a></div></div>
+<div class="col-md-4"><div class="card quick p-4 h-100"><div class="display-6">📅</div><h3 class="mt-2">Đặt lịch với Ban ấp</h3><p>Đăng ký ngày, giờ và nội dung làm việc với Ban ấp.</p><a class="btn btn-main mt-auto" href="/dat-lich">Đặt lịch ngay</a></div></div>
+<div class="col-md-4"><div class="card quick p-4 h-100"><div class="display-6">🔎</div><h3 class="mt-2">Tra cứu lịch hẹn</h3><p>Nhập số điện thoại đã đăng ký để xem tình trạng lịch hẹn.</p><a class="btn btn-outline-danger mt-auto" href="/tra-cuu">Tra cứu</a></div></div>
+</div>
+<div class="card mt-5 p-4"><h4>📌 Lưu ý khi phản ánh</h4><ul class="mb-0"><li>Mô tả rõ sự việc, thời gian và địa điểm.</li><li>Có thể gửi ảnh/video làm bằng chứng.</li><li>Trường hợp khẩn cấp cần liên hệ cơ quan chức năng theo quy định; cổng này phục vụ việc tiếp nhận thông tin của Ban ấp.</li></ul></div>
+</div>
+{% endblock %}

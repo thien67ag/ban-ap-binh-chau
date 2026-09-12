@@ -1,0 +1,25 @@
+{% extends "base.html" %}{% block title %}Bảng điều hành{% endblock %}
+{% block content %}<div class="container py-5">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2"><div><div class="small text-muted">BAN ẤP BÌNH CHÂU</div><h2>📊 Bảng điều hành</h2></div><form method="post" action="/admin/logout"><button class="btn btn-outline-danger">Đăng xuất</button></form></div>
+<div class="row g-3 mt-2">
+{% for label,val in [('Tổng phản ánh',stats.total_reflections),('Mới tiếp nhận',stats.new_reflections),('Đang xử lý',stats.processing),('Đã xử lý',stats.done_reflections),('Tổng lịch hẹn',stats.appointments)] %}
+<div class="col-6 col-lg"><div class="card p-3 h-100"><div class="small text-muted">{{label}}</div><div class="display-6 fw-bold">{{val}}</div></div></div>
+{% endfor %}
+</div>
+<h4 class="mt-5">🚨 Phản ánh ANTT</h4><div class="table-responsive"><table class="table table-bordered align-middle bg-white">
+<tr><th>Mã</th><th>Người gửi</th><th>Nội dung</th><th>Mức độ</th><th>Thời gian</th><th>Trạng thái</th></tr>
+{% for x in reflections %}<tr><td><b>{{x.report_code}}</b></td><td>{{x.name or "Ẩn danh"}}<br><small>{{x.phone}}</small></td>
+<td>{{x.content}}<br><small>{{x.address}}</small>{% if x.attachment %}<br><a href="/tai-lieu/{{x.attachment}}" target="_blank">📎 Xem tệp</a>{% endif %}{% if x.latitude and x.longitude %}<br><small>📍 {{x.latitude}}, {{x.longitude}}</small>{% endif %}</td>
+<td><span class="badge badge-priority {% if x.priority=='Khẩn cấp' %}text-bg-danger{% elif x.priority=='Cần xử lý' %}text-bg-warning{% else %}text-bg-secondary{% endif %}">{{x.priority}}</span></td>
+<td>{{x.created_at}}</td><td><form method="post" action="/admin/reflection/{{x.id}}"><select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
+{% for s in ['Mới tiếp nhận','Đang xử lý','Đã xử lý'] %}<option {% if x.status==s %}selected{% endif %}>{{s}}</option>{% endfor %}
+</select></form></td></tr>{% endfor %}
+</table></div>
+<h4 class="mt-5">📅 Lịch hẹn</h4><div class="table-responsive"><table class="table table-bordered align-middle bg-white">
+<tr><th>Mã</th><th>Người dân</th><th>Ngày/giờ</th><th>Nội dung</th><th>Trạng thái</th></tr>
+{% for x in appointments %}<tr><td><b>{{x.appointment_code}}</b></td><td>{{x.name}}<br>{{x.phone}}</td><td>{{x.date}} {{x.time}}</td><td>{{x.purpose}}</td><td>
+<form method="post" action="/admin/appointment/{{x.id}}"><select name="status" onchange="this.form.submit()" class="form-select form-select-sm">
+{% for s in ['Chờ xác nhận','Đã xác nhận','Đã hoàn thành','Đã hủy'] %}<option {% if x.status==s %}selected{% endif %}>{{s}}</option>{% endfor %}
+</select></form></td></tr>{% endfor %}
+</table></div>
+</div>{% endblock %}

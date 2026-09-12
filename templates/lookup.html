@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Tra cứu{% endblock %}
+{% block content %}<div class="container py-5"><div class="card p-4 mx-auto" style="max-width:850px">
+<h2>🔎 Tra cứu lịch hẹn</h2><form method="post" class="row g-2"><div class="col-md-9"><input class="form-control" name="phone" placeholder="Nhập số điện thoại" required></div><div class="col-md-3"><button class="btn btn-main w-100">Tra cứu</button></div></form>
+{% if result is not none %}<hr>{% if result %}{% for x in result %}<div class="border rounded p-3 mb-3"><div class="d-flex justify-content-between flex-wrap"><b>{{x.appointment_code}}</b><span class="badge text-bg-secondary">{{x.status}}</span></div><hr><b>{{x.name}}</b> — {{x.date}} {{x.time}}<br>{{x.purpose}}<br><small class="text-muted">{{x.address or ""}}</small></div>{% endfor %}{% else %}<p class="mt-3">Không tìm thấy lịch hẹn.</p>{% endif %}{% endif %}
+</div></div>{% endblock %}

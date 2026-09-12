@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}Phản ánh ANTT{% endblock %}
+{% block content %}<div class="container py-5"><div class="card p-4 mx-auto" style="max-width:850px">
+<h2>🚨 Gửi phản ánh ANTT</h2><p class="text-muted">Thông tin sẽ được Ban ấp Bình Châu tiếp nhận và xem xét.</p>
+<form method="post" enctype="multipart/form-data">
+<label class="required">Nội dung phản ánh</label><textarea class="form-control mb-3" name="content" rows="6" required placeholder="Mô tả sự việc, thời gian, địa điểm..."></textarea>
+<div class="row"><div class="col-md-6"><label>Nhóm nội dung</label><select class="form-select mb-3" name="category"><option>AN NINH</option><option>TRẬT TỰ</option><option>GIAO THÔNG</option><option>TIẾNG ỒN</option><option>KHÁC</option></select></div>
+<div class="col-md-6"><label>Mức độ</label><select class="form-select mb-3" name="priority"><option>Bình thường</option><option>Cần xử lý</option><option>Khẩn cấp</option></select></div></div>
+<div class="row"><div class="col-md-6"><label>Họ và tên (không bắt buộc)</label><input class="form-control mb-3" name="name"></div>
+<div class="col-md-6"><label>Số điện thoại (không bắt buộc)</label><input class="form-control mb-3" name="phone"></div></div>
+<label>Địa điểm liên quan</label><input class="form-control mb-3" name="address" placeholder="Ấp, đường, khu vực...">
+<div class="mb-3"><label>Ảnh/video bằng chứng (không bắt buộc, tối đa 50 MB)</label><input class="form-control" type="file" name="attachment" accept="image/*,video/mp4,video/webm,video/quicktime"></div>
+<div class="mb-2 d-flex justify-content-between align-items-center"><label>📍 Vị trí trên bản đồ (không bắt buộc)</label><button type="button" class="btn btn-sm btn-outline-danger" onclick="getLocation()">Dùng vị trí hiện tại</button></div>
+<div id="map" class="mb-2"></div><div id="mapStatus" class="small text-muted mb-3">Bạn có thể bấm vào bản đồ để chọn vị trí.</div>
+<input type="hidden" name="latitude" id="latitude"><input type="hidden" name="longitude" id="longitude">
+<button class="btn btn-main btn-lg w-100">Gửi phản ánh</button>
+</form></div></div>{% endblock %}
+{% block scripts %}<script>
+const map=L.map('map').setView([10.3867,105.4352],13);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap'}).addTo(map);
+let marker=null;
+function setPoint(lat,lng){
+ document.getElementById('latitude').value=lat.toFixed(6); document.getElementById('longitude').value=lng.toFixed(6);
+ if(marker) marker.setLatLng([lat,lng]); else marker=L.marker([lat,lng]).addTo(map);
+ document.getElementById('mapStatus').textContent=`Đã chọn vị trí: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+}
+map.on('click',e=>setPoint(e.latlng.lat,e.latlng.lng));
+function getLocation(){
+ if(!navigator.geolocation){alert('Trình duyệt không hỗ trợ định vị.');return;}
+ navigator.geolocation.getCurrentPosition(p=>{setPoint(p.coords.latitude,p.coords.longitude);map.setView([p.coords.latitude,p.coords.longitude],16)},()=>alert('Không lấy được vị trí. Bạn có thể bấm trực tiếp lên bản đồ.'));
+}
+</script>{% endblock %}
